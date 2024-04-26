@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import App from './App.vue'
 
 import SentenceInput from './components/SentenceInput.vue'
@@ -25,8 +25,8 @@ const routes = [
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
+    history: createWebHashHistory(),
+    routes,
 })
 
 createApp(App).use(router).mount('#app')

@@ -3,13 +3,13 @@
     <h5 class="mt-3" v-if="techniqueName">{{techniqueName}}</h5>
     <p>{{techniqueDescription}}</p>
     <div>
-        <button class="btn btn-success p-1 m-1" @click="() => {showPies = false; generateFn()}" :disabled="textToShow.some(word => !word.show)">Generate</button>
+        <button class="btn btn-success p-1 m-1" @click="() => {showPies = false; generateFn()}" :disabled="textToShow.some(word => !word.show)">Generer</button>
     </div>
     <span v-for="word in textToShow" :key="word.pos">
         <button v-if="word.show" class="btn btn-dark p-1 m-1" disabled>{{ word.word }}</button>
     </span>
     <button v-if="textToShow.some(word => !word.show)" class="btn btn-secondary p-1 m-1" disabled><span class="loading"></span></button>
-    <div v-if="showPies || (textToShow.length && textToShow.every(word => word.show))"><button class="btn btn-primary p-1 m-3" @click="() => {this.showPies=true}">How?</button></div>
+    <div v-if="showPies || (textToShow.length && textToShow.every(word => word.show))"><button class="btn btn-primary p-1 m-3" @click="() => {this.showPies=true}">Hvordan?</button></div>
     <div class="row pie-container" v-if="showPies">
         <div class="col p-1 m-0" v-for="word in textToShow" :key="word.pos">
             <div><button class="btn btn-light"><small>{{ word.pos }}</small></button></div>

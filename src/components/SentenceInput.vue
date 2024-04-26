@@ -1,21 +1,21 @@
 <template>
 <div>
-    <h3>Hi there!</h3>
+    <h3>Hej med dig!</h3>
     <p>
-        This is the website we've designed to help with learning about NLP and Generative AI.
-        If you have any questions, feel free to ask us.
-        If you encounter an error at some point, let us know too :)<br>
-        To start, just enter a sentence about yourself below and click the submit button. It can be anything about yourself you like!
-        We're going to collect everyones sentences together and use them later on in the class.
+        Dette er webstedet, vi har designet til at hjælpe med at lære om NLP og Generativ AI.
+        Hvis du har spørgsmål, er du velkommen til at spørge os.
+        Hvis du støder på en fejl på et tidspunkt, så lad os også vide det :)<br>
+        For at starte skal du blot indtaste en sætning om hvorfor sociale medier er god/dårlig nedenfor og klikke på indsend-knappen.
+        Vi vil samle alles sætninger sammen og bruge dem senere i klassen.
     </p>
     <div class="row" id="about-me-form">
         <div class="col">
             <div class="form-group">
-                <label for="about-me-input" class="my-2">Enter your sentence about yourself below:</label>
+                <label for="about-me-input" class="my-2">Indtast din sætning om sociale medier nedenfor:</label>
                 <div class="input-group">
                     <input type="text" class="form-control" id="about-me-input" name="about-me-input" @input="checkSubmit($event.target.value)">
                     <div class="input-group-append">
-                        <button id="submit-button" type="submit" class="btn btn-primary" @click="aboutMeSubmit()" disabled>Submit</button>
+                        <button id="submit-button" type="submit" class="btn btn-primary" @click="aboutMeSubmit()" disabled>Indsend</button>
                     </div>
                 </div>
             </div>

@@ -4,69 +4,69 @@
         <h3 v-if="step === 'punc-init'">Perfect!</h3>
     </transition>
     <p class="my-2">
-        We've registered your sentence as: <b>{{ sentence }}</b><br>
-        Below, we're going to "clean" up your sentence a bit (ie. removing unnecessary parts and lowercasing), so that it's easier for the computer to understand.<br>
+        Vi har modtaget din sætning som er: <b>{{ sentence }}</b><br>
+        Nedenfor skal vi "rydde" lidt op i din sætning (dvs. fjerne unødvendige dele og store bogstaver), så det er nemmere for computeren at forstå.<br>
     </p>
     <transition name="fade">
         <p v-if="'punc' === step.split('-')[0]">
-            First, we're going to remove all punctuation, double spaces, and other characters.
-            You can guess what characters are going to be removed if you'd like - click the character to mark it as a guess (it'll turn dark grey). <br>
-            Then, when you're ready you can click the "Highlight all punctuation and double spaces" button to reveal what's going to be cleaned.
-            If you'd like to see it again you can click the reset button and try again.
+            Først skal vi fjerne alle tegnsætninger, dobbelte mellemrum og andre tegn.
+            Du kan gætte, hvilke tegn der skal fjernes, hvis du vil - klik på tegnet for at markere det som et gæt (det bliver mørkegrå). <br>
+            Når du derefter er klar, kan du klikke på knappen "Highlight alle tegnsætninger og dobbelte mellemrum" for at afsløre, hvad der skal ryddes op.
+            Hvis du gerne vil se det igen, kan du klikke på nulstil-knappen og prøve igen.
         </p>
     </transition>
     <transition name="fade">
-        <p v-if="step === 'punc-started'">Now, you can click on any of the highlighted characters to remove them. Or, you can auto-click them all using the "Click all" button. When you're done, click the "Continue" button to move on to the next step.</p>
+        <p v-if="step === 'punc-started'">Nu kan du klikke på et af de fremhævede tegn for at fjerne dem. Eller du kan automatisk klikke på dem alle ved at bruge knappen "Klik på alle". Når du er færdig, skal du klikke på knappen "Fortsæt" for at gå videre til næste trin.</p>
     </transition>
     <transition name="fade">
-        <p v-if="step === 'punc-finished'">Great! Hit the continue button to advance</p>
+        <p v-if="step === 'punc-finished'">Nice! Tryk på Fortsæt-knappen for at gå videre</p>
     </transition>
     <transition name="fade">
         <p v-if="'caps' === step.split('-')[0]">
-            Okay, here we're going to remove caps. There's no guessing this time, just click the "Highlight uppercase characters" button to reveal what's going to be cleaned.<br>
-            You can reset to before caps were removed by using the reset button. If you want to see the punctuation part again, you can reload the page.
+            Okay, her skal vi fjerne store bogstaver. Der er ingen gæt denne gang, bare klik på knappen "Highlight store bogstaver" for at afsløre, hvad der skal ryddes op.<br>
+            Du kan nulstille til før de store bogstaver blev fjernet ved at bruge nulstillingsknappen. Hvis du vil se tegnsætningsdelen igen, kan du genindlæse siden.
         </p>
     </transition>
     <transition name="fade">
-        <p v-if="step === 'caps-started'">This time you can click on a highlighted character to lowercase it (or use the click all button if you want)</p>
+        <p v-if="step === 'caps-started'">Denne gang kan du klikke på et highlighted tegn for at erstatte det med små bogstaver (eller brug klik alle-knappen, hvis du vil)</p>
     </transition>
     <transition name="fade">
-        <p v-if="step === 'caps-finished'">Nice! Hit the continue button to advance</p>
+        <p v-if="step === 'caps-finished'">Nice! Tryk på Fortsæt-knappen for at gå videre</p>
     </transition>
     <transition name="fade">
         <p v-if="'space' === step.split('-')[0]">
-            Finally, we're going to split the sentence by spaces (so that we can get our words)<br>
-            Click the "Highlight spaces" button to reveal what's going to be cleaned.<br>
-            You can reset to the unsplit sentence at any time using the reset button
+            Til sidst vil vi opdele sætningen med mellemrum (så vi kan klippe vores "rene" ord ud).<br>
+            Klik på knappen "Highlight mellemrum" for at afsløre, hvad der skal ryddes op.<br>
+            Du kan til enhver tid nulstille til den uopdelte sætning ved at bruge nulstillingsknappen.
         </p>
     </transition>
     <transition name="fade">
-        <p v-if="step === 'space-started'">Click on the highlighted spaces to cut out our words (or use click all)</p>
+        <p v-if="step === 'space-started'">Klik på de highlightede mellemrum for at klippe vores ord ud (eller brug klik alle)</p>
     </transition>
     <transition name="fade">
-        <p v-if="step === 'space-finished'">Awesome! We've cleaned the sentence, which you can see below as words. Click the button to advance to the next part (if it's asking you to wait congratulations on being fast! We'll update it in a minute so you can move on)</p>
+        <p v-if="step === 'space-finished'">Fantastisk! Vi har renset sætningen, som du kan se nedenfor som ord. Klik på knappen for at gå videre til næste del (hvis den beder dig om at vente, tillykke med at være hurtig! Vi opdaterer den om et minut, så du kan komme videre)</p>
     </transition>
 </div>
 <div class="row">
     <div class="col">
-        <button :disabled="step.endsWith('init')" @click="reset()" class="btn btn-danger">Reset</button>
+        <button :disabled="step.endsWith('init')" @click="reset()" class="btn btn-danger">Nulstil</button>
     </div>
     <div class="col">
-        <button v-if="step.startsWith('punc')" @click="removePunct()" :disabled="!step.endsWith('init')" class="btn btn-primary">Highlight all punctuation and double spaces</button>
-        <button v-if="step.startsWith('caps')" @click="removeCaps()" :disabled="!step.endsWith('init')" class="btn btn-primary">Highlight uppercase characters</button>
-        <button v-if="step.startsWith('space')" @click="splitBySpace()" :disabled="!step.endsWith('init')" class="btn btn-primary">Highlight spaces</button>
+        <button v-if="step.startsWith('punc')" @click="removePunct()" :disabled="!step.endsWith('init')" class="btn btn-primary">Highlight alle tegnsætninger og dobbelte mellemrum</button>
+        <button v-if="step.startsWith('caps')" @click="removeCaps()" :disabled="!step.endsWith('init')" class="btn btn-primary">Highlight store bogstaver</button>
+        <button v-if="step.startsWith('space')" @click="splitBySpace()" :disabled="!step.endsWith('init')" class="btn btn-primary">Highlight mellemrum</button>
     </div>
     <div class="col">
-        <button v-if="step.endsWith('started')" @click="clickAll()" class="btn btn-secondary">Click all</button>
-        <button v-if="step === 'space-finished'" @click="finishStep()" class="btn btn-success" :disabled="!canAdvance">{{canAdvance ? 'Finish' : 'Please Wait...'}}</button>
-        <button v-else-if="step.endsWith('finished')" @click="finishStep()" class="btn btn-success">Continue</button>
+        <button v-if="step.endsWith('started')" @click="clickAll()" class="btn btn-secondary">Klik alle</button>
+        <button v-if="step === 'space-finished'" @click="finishStep()" class="btn btn-success" :disabled="!canAdvance">{{canAdvance ? 'Afslut' : 'Vent venligst...'}}</button>
+        <button v-else-if="step.endsWith('finished')" @click="finishStep()" class="btn btn-success">Fortsæt</button>
     </div>
 </div>
 <div v-if="step.startsWith('punc')" class="btn-group pt-5" role="group" id="textButtons">
     <button v-for="(c, index) in cache.punc" class="btn btn-light p-1 border m-0" @click="toggleActive" :key="index">{{ c }}</button>
 </div>
 <transition name="fade">
-    <div v-if="score && step == 'punc-finished'" class="my-2">You were {{Math.round(score[0] * 100)}}% correct ({{score[1]}} / {{score[3]}}, with {{ score[2] }} wrong)</div>
+    <div v-if="score && step == 'punc-finished'" class="my-2">Du var {{Math.round(score[0] * 100)}}% korrect ({{score[1]}} / {{score[3]}}, med {{ score[2] }} forkert)</div>
 </transition>
 <div v-if="step.startsWith('caps')" class="btn-group pt-5" role="group" id="textButtons">
     <button v-for="(c, index) in cache.caps" class="btn btn-light p-1 border m-0" disabled :key="index">{{ c }}</button>

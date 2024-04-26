@@ -1,49 +1,49 @@
 <template>
 <div>
-    <h3>Free generation game</h3>
+    <h3>Åben generation spil</h3>
     <p class="mb-5">
-        Explore all the generation methods we've talked about so far! <br>
-        You can select the dataset, method, and window size in the menu below. If you're not sure what something means, hover over it and you can see an explanation. <br>
-        Then, you can generate a sentence one word at a time based on all our techniques. <br>
+        Udforsk alle de generationsmetoder, vi har talt om indtil videre! <br>
+        Du kan vælge datasæt, metode og vinduesstørrelse i menuen nedenfor. Hvis du ikke er sikker på, hvad noget betyder, skal du holde markøren over det, og du kan se en forklaring. <br>
+        Derefter kan du generere en sætning, et ord ad gangen, baseret på alle vores teknikker. <br>
     </p>
     <div class="border border-dark rounded p-3 m-3">
-        <h5 class="mt-3">Freely generate your own, new sentence here!</h5>
+        <h5 class="mt-3">Generer frit din egen, nye sætning her!</h5>
         <div class="row">
             <div class="col">
                 <div class="my-2">
-                    <b>Select a dataset:</b>
+                    <b>Vælg et datasæt:</b>
                     <div class="btn-group">
                         <button :title="descriptionLookup[dataset]" v-for="(dataset, index) in datasets" :key="index" :class="['btn', 'btn-' + datasetButtonColor[dataset], { 'border border-4 border-dark': selectedDataset === dataset }]" @click="selectDataset(dataset)">
-                            {{ dataset + (selectedDataset === dataset ? ' (current)' : '') }}
+                            {{ dataset + (selectedDataset === dataset ? ' (valgt)' : '') }}
                         </button>
                     </div>
                 </div>
                 <div class="my-2">
-                    <b>Select a method:</b>
+                    <b>Vælg en metode:</b>
                     <div class="btn-group">
-                        <button :title="descriptionLookup[dataset]" v-for="(method, index) in methods" :key="index" :class="['btn', 'btn-light', { 'border border-4 border-dark': selectedMethod === method }]" @click="selectMethod(method)">
-                            {{ method + (selectedMethod === method ? ' (current)' : '') }}
+                        <button :title="descriptionLookup[method]" v-for="(method, index) in methods" :key="index" :class="['btn', 'btn-light', { 'border border-4 border-dark': selectedMethod === method }]" @click="selectMethod(method)">
+                            {{ method + (selectedMethod === method ? ' (valgt)' : '') }}
                         </button>
                     </div>
                 </div>
                 <div class="my-2">
-                    <b>Select a window Size{{ usesWindowSize? '' : ' (not used in this method)'}}:</b>
+                    <b>Vælg en vinduesstørrelse{{ usesWindowSize? '' : ' (ikke brugt i denne metode)'}}:</b>
                     <div>
                         1<input type="range" v-model="windowSize" min="1" max="5" :disabled="!usesWindowSize" />5
                     </div>
                 </div>
                 <div class="my-2">
-                    <b>Probabilities:</b>
+                    <b>Sandsynligheder:</b>
                     <div class="d-flex justify-content-center align-items-center" style="max-height: 30vh;">
                         <Pie :data="pieChartData" :options="chartOptions" />
                     </div>
                 </div>
-                <button v-if="('x'+generatedSentence.map(x=>x.word).join()).slice(-1)[0] === '.'" class="btn btn-success" disabled>You generated a full-stop. Clear the sentence to try again</button>
-                <button v-else class="btn btn-success" @click="generateCurrWord">Generate Next Word</button>
+                <button v-if="('x'+generatedSentence.map(x=>x.word).join()).slice(-1)[0] === '.'" class="btn btn-success" disabled>Du genererede et punktum. Ryd sætningen for at prøve igen.</button>
+                <button v-else class="btn btn-success" @click="generateCurrWord">Generer næste ord</button>
             </div>
 
             <div class="col">
-                <button class="btn btn-danger" @click="clearGeneratedSentence">Clear Sentence</button>
+                <button class="btn btn-danger" @click="clearGeneratedSentence">Ryd sætning</button>
                 <div class="border border-dark rounded p-3 m-3">
                     <span v-for="(word, i) in generatedSentence" :key="i">
                         <button :class="['btn', 'btn-' + datasetButtonColor[word.dataset], 'p-1', 'm-1']" disabled>{{ word.word }}</button>
@@ -105,7 +105,7 @@ export default {
             let allProbsWithOther = this.allProbs
             if (this.allProbs.length > 5) {
                 allProbsWithOther = this.allProbs.slice(0, 5)
-                allProbsWithOther.push(['Others', this.allProbs.slice(5).reduce((a, [, b]) => a + b, 0)])
+                allProbsWithOther.push(['Andre', this.allProbs.slice(5).reduce((a, [, b]) => a + b, 0)])
             }
             return allProbsWithOther
         },
@@ -122,49 +122,49 @@ export default {
     data() {
         return {
             datasetButtonColor: {
-                'Submitted Sentences': 'primary',
-                'Five Star Reviews': 'success',
-                'One Star Reviews': 'warning',
-                'Movie & TV Subtitles': 'secondary',
+                'Indsendte sætninger': 'primary',
+                '5-stjerne anmeldelser': 'success',
+                '1-stjerne anmeldelser': 'warning',
+                'Undertekster til film og tv': 'secondary',
             },
             datasets: [
-                'Submitted Sentences',
-                'Five Star Reviews',
-                'One Star Reviews',
-                'Movie & TV Subtitles',
+                'Indsendte sætninger',
+                '5-stjerne anmeldelser',
+                '1-stjerne anmeldelser',
+                'Undertekster til film og tv',
             ],
             datasetLookup: {
-                'Submitted Sentences': fiveStarData,
-                'Five Star Reviews': fiveStarData,
-                'One Star Reviews': oneStarData,
-                'Movie & TV Subtitles': subtitleData,
+                'Indsendte sætninger': fiveStarData,
+                '5-stjerne anmeldelser': fiveStarData,
+                '1-stjerne anmeldelser': oneStarData,
+                'Undertekster til film og tv': subtitleData,
             },
-            selectedDataset: 'Submitted Sentences',
+            selectedDataset: 'Indsendte sætninger',
             methods: [
-                'Greedy',
-                'Weighted Random',
-                'Random',
-                'Most Common',
-                'Most Common at Position'
+                'Vælg højeste AKA grådig',
+                'Vægtet tilfældig',
+                'Tilfældig',
+                'Mest almindelig',
+                'Mest almindelig ved position'
             ],
             methodLookup: {
-                'Greedy': this.greedyGen,
-                'Weighted Random': this.randomGen,
-                'Random': this.completeRandomGen,
-                'Most Common': this.mostCommonGen,
-                'Most Common at Position': this.mostCommonAtPosGen
+                'Vælg højeste AKA grådig': this.greedyGen,
+                'Vægtet tilfældig': this.randomGen,
+                'Tilfældig': this.completeRandomGen,
+                'Mest almindelig': this.mostCommonGen,
+                'Mest almindelig ved position': this.mostCommonAtPosGen
             },
-            selectedMethod: 'Greedy',
+            selectedMethod: 'Vælg højeste AKA grådig',
             descriptionLookup: {
-                'Submitted Sentences': 'Generation will be based on everyones sentences from today',
-                'Five Star Reviews': 'Generation will be based on 500 five star reviews from tripadvisor',
-                'One Star Reviews': 'Generation will be based on 500 one star reviews from tripadvisor',
-                'Movie & TV Subtitles': 'Generation will be based on 500 randomly selected subtitles from movies and TV shows',
-                'Greedy': 'The greedy method always chooses the most likely word to follow the previous N words.',
-                'Weighted Random': 'The weighted random method chooses the next word from all words which followed the previous N words randomly, but the probability is proportional to how common the word was. So if er appeared twice after jeg and har appeared once, er would be chosen 2/3 of the time and har would be chosen 1/3 of the time.',
-                'Random': 'The random method chooses the next word from all words which followed the previous N words randomly, with completely equal probability for each possible word.',
-                'Most Common': 'The most common method always chooses the most common word overall in the dataset.',
-                'Most Common at Position': 'The most common at position method always chooses the most common word at the current position in the dataset. (ie. if youre on your fifth word, it will choose the most common fifth word of sentences in the dataset',
+                'Indsendte sætninger': 'Generation vil være baseret på alles sætninger fra i dag',
+                '5-stjerne anmeldelser': 'Generation vil være baseret på 500 5-stjernede anmeldelser fra tripadvisor',
+                '1-stjerne anmeldelser': 'Generation vil være baseret på 500 1-stjernede anmeldelser fra tripadvisor',
+                'Undertekster til film og tv': 'Generation vil være baseret på 500 tilfældigt udvalgte undertekster fra film og tv-serier',
+                'Vælg højeste AKA grådig': 'Den grådige metode vælger altid det mest sandsynlige ord til at følge de foregående N ord',
+                'Vægtet tilfældig': 'Den vægtede tilfældige metode vælger det næste ord fra alle ord, der fulgte de foregående N ord tilfældigt, men sandsynligheden er proportional med, hvor almindeligt ordet var. Så hvis "er" dukkede op to gange efter "jeg" og "har" dukkede op én gang, ville "er" blive valgt 2/3 af tiden og "har" valgt 1/3 af tiden.',
+                'Tilfældig': 'Den tilfældige metode vælger det næste ord blandt alle ord, der fulgte de foregående N ord tilfældigt, med fuldstændig lige stor sandsynlighed for hvert muligt ord',
+                'Mest almindelig': 'Den mest almindelige metode vælger altid det mest almindelige ord overordnet i datasættet.',
+                'Mest almindelig ved position': 'Den mest almindelige ved position metode vælger altid det mest almindelige ord på den aktuelle position i datasættet. (dvs. hvis du er på dit femte ord, vil det vælge det mest almindelige femte ord af sætninger i datasættet',
             },
             windowSize: 3,
             pieChartColors: [
@@ -377,7 +377,7 @@ export default {
     },
     watch: {
         allSentences() {
-            this.datasetLookup['Submitted Sentences'] = this.getSubmittedData()
+            this.datasetLookup['Indsendte sætninger'] = this.getSubmittedData()
         },
     },
 };

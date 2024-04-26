@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <h1>Oops</h1>
-    You seem to have gotten lost. That's our bad, please let someone know!
+    <h1>Ups</h1>
+    Du ser ud til at være faret vild. Det er vores skyld, lad nogen vide det!
   </div>
 </template>

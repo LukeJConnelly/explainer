@@ -1,12 +1,12 @@
 <template>
 <div>
     <!-- States: "mode", "mode-by-pos", "ngram", "rand" -->
-    <h3>Generating text</h3>
+    <h3>Generering af tekst</h3>
     <p>
-        In this page we will generate text using the data we have collected.
-        Each box represents a new generation technique. Clicking generate will create a sentence using the technique.
-        After generating, you will also be able to click a "how" button to see pie charts representing the probabilities/factors used to make decisions.
-        Here's the first technique:
+        På denne side vil vi generere tekst ved hjælp af de data, vi har indsamlet.
+        Hver boks repræsenterer en ny generation metode. Ved at klikke på "generer" oprettes en sætning ved brug af metoden.
+        Efter generering vil du også være i stand til at klikke på en "hvordan"-knap for at se cirkeldiagrammer, der repræsenterer de sandsynligheder/faktorer, der bruges til at træffe beslutninger.
+        Her er den første teknik:
     </p>
     <div class="border border-dark rounded p-3 m-3">
         <GenerateAnimation :textToShow="mostCommonWordInEveryPosition" :generateFn="getMostCommonWordInEveryPosition" :techniqueName="techniques['mode'][0]" :techniqueDescription="techniques['mode'][1]"></GenerateAnimation>
@@ -15,22 +15,22 @@
         <GenerateAnimation :textToShow="mostCommonWordAtEachPosition" :generateFn="getMostCommonWordAtEachPosition" :techniqueName="techniques['pos'][0]" :techniqueDescription="techniques['pos'][1]"></GenerateAnimation>
     </div>
     <div class="border border-dark rounded p-3 m-3" v-if="mostCommonWordAtEachPosition.length  && stateOk('ngram')">
-        <h5 class="mt-3">Most common following previous {{windowSize}}-word window</h5>
-        <label>Choose the window size:</label>
+        <h5 class="mt-3">Mest almindeligt efter tidligere {{windowSize}}-ord-vindue</h5>
+        <label>Vælg vinduesstørrelsen:</label>
         <span class="my-2">
             1<input type="range" v-model="windowSize" min="1" max="5" />5
         </span>
         <GenerateAnimation :textToShow="sliding" :generateFn="getSliding" :techniqueName="techniques['ngram'][0]" :techniqueDescription="techniques['ngram'][1]"></GenerateAnimation>
     </div>
     <div class="border border-dark rounded p-3 m-3" v-if="sliding.length  && stateOk('rand')">
-        <h5 class="mt-3">Random following previous {{randomWindowSize}}-word window</h5>
-        <label>Choose the window size:</label>
+        <h5 class="mt-3">Tilfældig valg fra alle ord der fulgte den tidligere {{windowSize}}-ord-vindue</h5>
+        <label>Vælg vinduesstørrelsen:</label>
         <span class="my-2">
             1<input type="range" v-model="randomWindowSize" min="1" max="5" />5
         </span>
         <GenerateAnimation :textToShow="slidingRandom" :generateFn="getSlidingRandom"  :techniqueName="techniques['rand'][0]" :techniqueDescription="techniques['rand'][1]"></GenerateAnimation>
     </div>
-    <button class="btn btn-primary mb-3" v-if="slidingRandom.length" @click="moveOn()" :disabled="!stateOk('sankey')">{{ stateOk('sankey') ? 'Continue' : 'Please Wait...' }}</button>
+    <button class="btn btn-primary mb-3" v-if="slidingRandom.length" @click="moveOn()" :disabled="!stateOk('sankey')">{{ stateOk('sankey') ? 'Fortsæt' : 'Vent venligst...' }}</button>
 </div>
 </template>
 
@@ -69,10 +69,10 @@ export default {
                 '#bbb'
             ],
             techniques: {
-                'mode': ['Most common word', 'This technique will always choose the most common word in all sentences'],
-                'pos': ['Positional most common word', 'This technique chooses the most common word at each position (most common 1st word, most common 2nd word...)'],
-                'ngram': ['', 'This technique chooses the most common word to follow the previous N words (which we call a window here), where N can be any number. You can choose this N using the slider above'],
-                'rand': ['', 'This technique chooses a random word which followed the previous N words. Choose N using the slider above'],
+                'mode': ['Mest almindelig', 'Denne teknik vil altid vælge det mest almindelige ord i alle sætninger'],
+                'pos': ['Positionelt mest almindelige ord', 'Denne teknik vælger det mest almindelige ord på hver position (mest almindelige 1. ord, mest almindelige 2. ord...)'],
+                'ngram': ['', 'Denne teknik vælger det mest almindelige ord til at følge de foregående N ord (som vi kalder et vindue her), hvor N kan være et hvilket som helst tal. Du kan vælge dette N ved at bruge skyderen ovenfor.'],
+                'rand': ['', 'Denne teknik vælger et tilfældigt ord, som fulgte de foregående N ord. Vælg N ved at bruge skyderen ovenfor.'],
             },
         };
     },
@@ -89,7 +89,7 @@ export default {
             let allProbsWithOther = probs
             if (probs.length > 5) {
                 allProbsWithOther = probs.slice(0, 5)
-                allProbsWithOther.push(['Others', probs.slice(5).reduce((a, [, b]) => a + b, 0)])
+                allProbsWithOther.push(['Andre', probs.slice(5).reduce((a, [, b]) => a + b, 0)])
             }
             return allProbsWithOther
         },

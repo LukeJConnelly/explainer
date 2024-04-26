@@ -1,18 +1,18 @@
 <template>
 <div>
-    <h3>Word flow</h3>
+    <h3>Ord "flow"</h3>
     <p>
-        Below, we're going to create a chart called a "sankey chart". This chart shows the flow of words from one to another (ie. how frequently one or more words leads into another word). <br>
-        It's essentially probability, but just pretty. <br>
-        This chart is based on everyones input sentences. You can select the window size as before. <br>
+        Nedenfor vil vi lave et diagram kaldet et "sankey-diagram". Dette diagram viser "flow" af ord fra det ene til det andet (dvs. hvor ofte et eller flere ord fører til et andet ord). <br>
+        Det er grundlæggende sandsynlighed, men bare smukt. <br>
+        Dette diagram er baseret på alles inputsætninger. Du kan vælge vinduesstørrelsen som før. <br>
     </p>
-    <label>Choose the window size:</label>
-    <input type="range" v-model="windowSize" min="1" max="5" />5
-    <div class="my-2"><button class="btn btn-success" @click="getChart()" :disabled="!chartReady">{{chartReady ? 'Render' : 'Updating...'}}</button></div>
+    <label>Vælg vinduesstørrelsen:</label>
+    1<input type="range" v-model="windowSize" min="1" max="5" />5
+    <div class="my-2"><button class="btn btn-success" @click="getChart()" :disabled="!chartReady">{{chartReady ? 'Lav diagrammet' : 'Opdaterer...'}}</button></div>
     <div class="my-3" style="height:200vh;" v-show="currChart">
         <canvas ref="chart"></canvas>
     </div>
-    <button class="btn btn-primary mb-3" @click="moveOn()" :disabled="!canAdvance" v-if="currChart">{{ canAdvance ? 'Continue' : 'Please Wait...' }}</button>
+    <button class="btn btn-primary mb-3" @click="moveOn()" :disabled="!canAdvance" v-if="currChart">{{ canAdvance ? 'Fortsæt' : 'Vent venligst...' }}</button>
 </div>
 </template>
 

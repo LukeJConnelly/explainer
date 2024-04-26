@@ -4,7 +4,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
 <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand m-2 ms-5" href="#">Generative AI Explained</a>
+    <a class="navbar-brand m-2 ms-5" href="#">Generativ AI Værktøj</a>
 </nav>
 <div class="container mt-5">
     <router-view :reqAddress='this.reqAddress' :allSentences='this.allSentences' :states='this.states' :currState='this.state'></router-view>
@@ -21,7 +21,7 @@ export default {
     name: 'App',
     data() {
         return {
-            reqAddress: 'http://192.168.1.102:5000/', // DO NOT FORGET THE SLASH
+            reqAddress: 'https://explainer-backend.azurewebsites.net/', // DO NOT FORGET THE SLASH
             state: stateNames[0],
             states: stateNames,
             allSentences: []
